@@ -13,7 +13,9 @@ Mongoose -- autoreg-6602075.dyn.wpi.edu
 
 Graymouse --autoreg-6602097.dyn.wpi.edu
 
-Lemur -- 
+How to ssh:
+ssh lemur@autoreg-#######.dyn.wpi.edu
+password is name, lavosoa for example
 
 
 
