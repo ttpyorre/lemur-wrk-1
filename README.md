@@ -5,14 +5,14 @@ This is the first workhop the Lemur MQP is running. By the end of the workshop y
 
 Here are the romis and their respective addresses:
 
-Lavasoa -- autoreg-6602086.dyn.wpi.edu
-Goldenbamboo -- autoreg-6602106.dyn.wpi.edu
+**Lavasoa** -- autoreg-6602086.dyn.wpi.edu  
+**Goldenbamboo** -- autoreg-6602106.dyn.wpi.edu  
 
-Ringtailed -- autoreg-6602101.dyn.wpi.edu
-Redruffed -- autoreg-6602100.dyn.wpi.edu
+**Ringtailed** -- autoreg-6602101.dyn.wpi.edu  
+**Redruffed** -- autoreg-6602100.dyn.wpi.edu  
 
-Mongoose -- autoreg-6602075.dyn.wpi.edu
-Graymouse --autoreg-6602097.dyn.wpi.edu
+**Mongoose** -- autoreg-6602075.dyn.wpi.edu  
+**Graymouse** --autoreg-6602097.dyn.wpi.edu  
 
 
 ## How to ssh into the pi:
