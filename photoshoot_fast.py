@@ -20,7 +20,7 @@ vc = cv.VideoCapture(0)
 result, image = vc.read()
 
 if result:
-    for i in range(1, 301): # Take 100 images of the item
+    for i in range(1, 401): # Take 100 images of the item
         print(f"Image #{i}")
         
         result, image = vc.read() # Capture image
@@ -31,7 +31,6 @@ if result:
         else: # Save a few for validation
             cv.imwrite(f'train/{item}/{item}_sample_{i}.png', image) # Save image to file
 
-        sleep(0.25) # Time for moving object/ changing its pose                
 
 # We're done, close everything down
 vc.release()

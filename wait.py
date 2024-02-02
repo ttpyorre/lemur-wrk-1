@@ -1,12 +1,18 @@
 #!/usr/bin/python
-print("Importing libraries..")
+'''
+This program does the same things as data.py, except it waits for user
+input to continue.
+
+'''
+
+print("importing libraries..")
 import time, math, smbus2 as sb
 from time import sleep
 import torch
 from torchvision import transforms
 import cv2 as cv
 from PIL import Image
-print("Importing done.")
+print("Done importing.")
 
 DEVICE_BUS = 1 
 DEVICE_ADDR = 0x12
@@ -29,6 +35,7 @@ def predict_from_im(model, transform, image):
     img = img.unsqueeze(0)
 
     with torch.no_grad():
+        print("output !!")
         sleep(0.1)
         outputs = model(img)
         _, preds = torch.max(outputs, 1)
@@ -63,6 +70,9 @@ if __name__ == '__main__':
     while rval:
         rval, frame = vc.read()
 
+        while():
+            pass
+
         preds = predict_from_im(model, data_transforms, frame)
         print(preds)
         
@@ -81,21 +91,17 @@ if __name__ == '__main__':
        # 4: TURN -90
        # TODO:
        # You should set unknown to something you want
-        
-        # Stop the movement
         if pr.item() == 0:
-            print("STOP")
+            print("Stop.")
             bus.write_byte(DEVICE_ADDR, 2)
-        # move backward
         elif pr.item() == 1:
-            print("Go backwards")
+            print("Backward.")
             bus.write_byte(DEVICE_ADDR, 1)
         elif pr.item() == 2:
-            print("Go forwards")
+            print("Forward.")
             bus.write_byte(DEVICE_ADDR, 0)
         else:
             bus.write_byte(DEVICE_ADDR, pr.item())
-
 
 
         if cv.waitKey(1) == 27: # exit on ESC
