@@ -36,4 +36,4 @@ then you should see all the directories in the system. Especially one called lem
 Now do:
 > cd lemur-wrk-1
 
-here you can find the data.py file, which you run after transferrin tl_model.tl to the system.
+here you can find the data.py file, which you run after transferring tl_model.tl to the system.

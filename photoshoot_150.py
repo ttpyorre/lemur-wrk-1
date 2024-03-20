@@ -19,8 +19,9 @@ vc = cv.VideoCapture(0)
 # Check that it's working
 result, image = vc.read()
 
+img_amt=150
 if result:
-    for i in range(1, 401): # Take 400 images of the item
+    for i in range(1, img_amt+1): # Take img_amt images of the item. Start at 1 to have data start at 1 when labeling.
         print(f"Image #{i}")
         
         result, image = vc.read() # Capture image
@@ -30,8 +31,8 @@ if result:
 
         else: # Save a few for validation
             cv.imwrite(f'train/{item}/{item}_sample_{i}.png', image) # Save image to file
-        if (i % 40 == 0) and i != 0:
-            wait = input("Ready for new pose? Press any key to continue.")
+
+        sleep(0.25) # Time for moving object/ changing its pose                
 
 # We're done, close everything down
 vc.release()

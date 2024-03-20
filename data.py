@@ -12,10 +12,11 @@ DEVICE_BUS = 1
 DEVICE_ADDR = 0x12
 
 my_data = (0x10, 0x11, 0x20, 0x32)
+path_to_model = "tl_model.ptl"
 
 print("Connect to bus.")
 bus = sb.SMBus(DEVICE_BUS)
-sleep(1)
+time.sleep(1)
 i = 0 
 
 # Helper functions
@@ -37,9 +38,9 @@ def predict_from_im(model, transform, image):
 if __name__ == '__main__':
 
     print("Loading the model...")
-    sleep(1)
+    time.sleep(1)
     # Load model that we trained
-    model = torch.jit.load("tl_model.ptl", map_location=torch.device('cpu'))
+    model = torch.jit.load(path_to_model, map_location=torch.device('cpu'))
     model.eval()
     print("Model loaded.")
 
@@ -68,34 +69,46 @@ if __name__ == '__main__':
         
         # Write to the device
         bus.write_byte(DEVICE_ADDR, 0x26)
-        sleep(0.1)
+        time.sleep(1)
         our_pr = preds[1]
         pr = our_pr[0]
        
 
        # ROMI HAS 5 ACTIONS
-       # 0: MOVE FORWARD
-       # 1: MOVE BACKWARD
-       # 2: STOP
-       # 3: TURN 90
-       # 4: TURN -90
+       # 0: STOP
+       # 1: MOVE FORWARD
+       # 2: MOVE BACKWARD
+       # 3: TURN ON BUZZER
+       # 4: TURN OFF BUZZER
+       # 5: TURN ON YELLOW LED
+       # 6: TURN OFF YELLOW LED
        # TODO:
        # You should set unknown to something you want
         
         # Stop the movement
         if pr.item() == 0:
+            print("UNKNOWN")
             print("STOP")
-            bus.write_byte(DEVICE_ADDR, 2)
+            bus.write_byte(DEVICE_ADDR, 0)
         # move backward
         elif pr.item() == 1:
-            print("Go backwards")
-            bus.write_byte(DEVICE_ADDR, 1)
+            print("TURN YELLOW LED ON")
+            bus.write_byte(DEVICE_ADDR, 5)
         elif pr.item() == 2:
-            print("Go forwards")
-            bus.write_byte(DEVICE_ADDR, 0)
+            print("TURN YELLOW LED OFF")
+            bus.write_byte(DEVICE_ADDR, 6)
+        elif pr.item() == 3:
+            print("GO FORWARD")
+            bus.write_byte(DEVICE_ADDR, 1)
+        elif pr.item() == 4:
+            print("GO BACKWARD")
+            bus.write_byte(DEVICE_ADDR, 2)
+        elif pr.item() == 5:
+            print("BUZZER?")
+            bus.write_byte(DEVICE_ADDR, 3)
         else:
-            bus.write_byte(DEVICE_ADDR, pr.item())
-
+            print("OUTSIDE RANGE")
+            bus.write_byte(DEVICE_ADDR, 0)
 
 
         if cv.waitKey(1) == 27: # exit on ESC
@@ -103,29 +116,3 @@ if __name__ == '__main__':
 
     vc.release()
 
-
-'''
-while True:
-    bus.write_byte(DEVICE_ADDR, 0x26)
-    print("Type F to move forward, B backward, S to stop, T to turn.")
-    c = input(">>> ")
-    if c == 'F':
-        bus.write_byte(DEVICE_ADDR, 0)
-    elif c == 'B':
-        bus.write_byte(DEVICE_ADDR, 1)
-    elif c == 'S':
-        bus.write_byte(DEVICE_ADDR, 2)
-    elif c == 'T':
-        print("Between 10 and 360 degrees, how much would you want to turn? Type X to cancel.")
-        i = input(">>> ")
-        if i == 'X':
-            pass
-        elif int(i) < 10 or int(i) > 360:
-            pass
-        else:
-            bus.write_byte(DEVICE_ADDR, int(i))
-    else:
-        pass
-    sleep(0.2)
-    print("hi")
-'''
